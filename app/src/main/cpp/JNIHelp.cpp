@@ -2,7 +2,7 @@
 // Created by gzbbxu on 2019/2/23.
 //
 
-#include "JNIHelp.h"
+#include "include/JNIHelp.h"
 #include <jni.h>
 #include <cstdlib>
 #include <string.h>

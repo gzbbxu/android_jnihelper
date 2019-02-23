@@ -50,7 +50,22 @@ typedef double   jdouble;  /* 64-bit IEEE 754 */   double
 | double[]            | jdoubleArray  |
 | other arrays        | jarray        |
 
+### cmake 头文件，编译，链接
 
+1. 添加**头文件**目录**INCLUDE_DIRECTORIES**  **所有的 .h 文件不用再去以路径的形式 引入**
+
+   **语法**
+
+   ```
+   include_directories([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])
+   它相当于g++选项中的-I参数的作用，也相当于环境变量中增加路径到CPLUS_INCLUDE_PATH变量的作用
+   include_directories(../../../thirdparty/comm/include)
+   g++ -I 
+   编译程序按照-I指定的路进去搜索头文件。
+   -I/home/include/表示将-I/home/include/目录作为第一个寻找头文件的目录，寻找的顺序是：
+    /home/include/ -->/usr/include-->/usr/local/include 
+    
+   ```
 
 
 
