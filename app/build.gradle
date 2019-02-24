@@ -9,11 +9,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
+       /* externalNativeBuild {
             cmake {
                 cppFlags ""
             }
-        }
+        }*/
     }
     buildTypes {
         release {
@@ -21,10 +21,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    externalNativeBuild {
+    /*externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
+    }*/
+    sourceSets {
+        main {
+            jni.srcDirs = ['src/main/jni', 'src/main/cpp', 'src/main/cpp/jnihelper', 'src/main/cpp2']
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+        }
+    }
+    packagingOptions{
+        pickFirst  '**'
     }
 }
 

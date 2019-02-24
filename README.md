@@ -67,19 +67,65 @@ typedef double   jdouble;  /* 64-bit IEEE 754 */   double
     
    ```
 
+### 设置so动态最后的输出路径
 
+```
+#设置生成的so动态库最后输出的路径 
+方式1
+# set(jnilibs "${CMAKE_SOURCE_DIR}/src/main/jniLibs")
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${jnilibs}/${ANDROID_ABI})
+#方式2
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
+```
 
+### Cmake 个人遇到的错误
 
+1.  android ndk error :undefined reference to.AS做了编译缓存，你需要重新clean一下你的project。 然后refresh linked c++ project.即可！
 
+2. More than one file was found with OS independent path. gradle 配置增加 
 
+   ```
+   packagingOptions{
+       pickFirst  '**'
+   }
+   ```
 
+3. cause executing external native build for cmake cmakelists.txt  生成多个so 文件的时候，字模块的cmakelists.txt  addLibray 如下。
 
+   **正确的方式**
 
+   ```
+   include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+   file(GLOB_RECURSE jni_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+   add_library( # Sets the name of the library.
+                jnihelper-lib
+   
+                # Sets the library as a shared library.
+                SHARED
+   
+                # Provides a relative path to your source file(s).
+                 ${jni_src}
+                )
+   ```
 
+   **错误的方式**
 
+   ```
+   add_library( # Sets the name of the library.
+                native-lib
+   
+                # Sets the library as a shared library.
+                SHARED
+   
+                # Provides a relative path to your source file(s).
+                src/main/cpp/native-lib.cpp
+                src/main/cpp/JNIHelp.cpp
+                 )
+   ```
 
+   
 
-
+4. 
 
 
 
