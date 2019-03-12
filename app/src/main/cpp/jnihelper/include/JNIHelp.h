@@ -64,6 +64,9 @@ const char* jniStrError(int errnum, char* buf, size_t buflen);
  * if called from C++11, char16_t (a bitwise identical distinct type).
  */
 jstring jniCreateString(C_JNIEnv* env, const jchar* unicodeChars, jsize len);
+// #define FREE(p)           (free(p), p=NULL)
+
+
 
 
 #ifdef __cplusplus
