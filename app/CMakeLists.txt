@@ -4,6 +4,11 @@
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
+
+
+#set(CMAKE_EXE_LINK_FLAGS "-Wl -hash-style=sysv")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 #设置生成的so动态库最后输出的路径 方式1
 set(jnilibs "${CMAKE_SOURCE_DIR}/src/main/jniLibs")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${jnilibs}/${ANDROID_ABI})

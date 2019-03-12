@@ -2,6 +2,7 @@
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +19,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        Log.i("zhouke_test","MainActivity jni 开始调用");
+        tv.setText("dfa");
+        new Thread(){
+            @Override
+            public void run() {
+                stringFromJNI();
+            }
+        }.start();
+        Log.i("zhouke_test","MainActivity jni  结束调用");
     }
 
     /**

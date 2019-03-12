@@ -14,7 +14,8 @@ test(
         jobject /* this */) {
     std::string hello = "Hello from C++";
     std::string  test= "test ";
-    testFun();
+//    testFun();
+    create_mult_process(2,1);
     env->NewStringUTF(test.c_str());
 
     return env->NewStringUTF(hello.c_str());
