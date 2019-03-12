@@ -12,7 +12,7 @@
 # Gradle automatically packages shared libraries with your APK.
 #include_directories(src/main/cpp/jnihelper/include)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
-file(GLOB_RECURSE jni_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE jni_src "${CMAKE_CURRENT_SOURCE_DIR}/*.c*")
 add_library( # Sets the name of the library.
              jnihelper-lib
 

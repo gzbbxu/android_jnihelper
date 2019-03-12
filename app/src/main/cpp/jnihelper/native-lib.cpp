@@ -2,7 +2,7 @@
 #include <string>
 #include "Alog-priv.h"
 #define LOG_TAG "zhouke_nativelib"
-
+#include "test.h"
 #include "JNIHelp.h"
 
 //Java_com_zkk_demo_MainActivity_stringFromJNI
@@ -14,7 +14,9 @@ test(
         jobject /* this */) {
     std::string hello = "Hello from C++";
     std::string  test= "test ";
+    testFun();
     env->NewStringUTF(test.c_str());
+
     return env->NewStringUTF(hello.c_str());
 }
 static JNINativeMethod gMethods[]={
