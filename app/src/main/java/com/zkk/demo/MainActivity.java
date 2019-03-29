@@ -1,8 +1,9 @@
- package com.zkk.demo;
+package com.zkk.demo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,15 +20,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        Log.i("zhouke_test","MainActivity jni 开始调用");
-        tv.setText("dfa");
-        new Thread(){
+        tv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                stringFromJNI();
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        stringFromJNI();
+                    }
+                }.start();
             }
-        }.start();
-        Log.i("zhouke_test","MainActivity jni  结束调用");
+        });
+        Log.i("zhouke_test", "MainActivity jni 开始调用");
+        tv.setText("dfa");
+
+        Log.i("zhouke_test", "MainActivity jni  结束调用");
     }
 
     /**
@@ -35,4 +42,8 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+    public void callBack(String string) {
+        Log.i("zhouke", "callBack >> " + string);
+    }
 }
