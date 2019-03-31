@@ -10,10 +10,9 @@
 
 //Java_com_zkk_demo_MainActivity_stringFromJNI
 jobject mobj;
-jmethodID  callback;
-WriterService * writerService;
-JavaVM * jvm;
-jclass strclass;
+jmethodID callback;
+WriterService *writerService = nullptr;
+JavaVM *jvm;
 extern "C" JNIEXPORT jstring
 
 JNICALL
@@ -25,21 +24,31 @@ test(
 //    testFun();
     mobj = env->NewGlobalRef(thiz);
     jclass objclss = env->FindClass("com.zkk.demo.MainActivity");
-    callback = env->GetMethodID(objclss,"callBack","(Ljava/lang/String;)V");
-    ALOGI("FindClass >> 11");
-    strclass = env->FindClass("java/lang/String");
-    ALOGI("FindClass >> 22");
-    writerService = new WriterService(mobj,callback);
-    writerService->connectServer(jvm);
-//    create_mult_process(2, 1);
-    jstring  sttest = env->NewStringUTF(test.c_str());
-    env->CallVoidMethod(mobj,callback,sttest);
-    ALOGI("FindClass >> 33");
+    callback = env->GetMethodID(objclss, "callBack", "(Ljava/lang/String;)V");
 
     return env->NewStringUTF(hello.c_str());
 }
+extern "C" JNIEXPORT void
+
+JNICALL
+createData(JNIEnv *env, jobject thiz) {
+    if (writerService == nullptr) {
+        writerService = new WriterService();
+        writerService->connectServer(jvm);
+    }
+    timespec time;
+    clock_gettime(CLOCK_REALTIME,&time);
+    long nsec = time.tv_nsec;
+    char temp[64] ={0};
+    sprintf(temp,"%ld",nsec);
+    writerService->writeString(temp,strlen(temp));
+//    env->CallVoidMethod(mobj, callback, sttest);
+}
+
+
 static JNINativeMethod gMethods[] = {
         {"stringFromJNI", "()Ljava/lang/String;", (void *) test},
+        {"createData",    "()V",   (void*)createData}
 };
 
 int register_android(JNIEnv *env) {
@@ -66,6 +75,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
         ALOGI("动态注册失败");
         goto bail;
     }
+
     ALOGI("动态注册成功");
     result = JNI_VERSION_1_4;
     bail:

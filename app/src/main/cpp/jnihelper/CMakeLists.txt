@@ -13,6 +13,8 @@
 #include_directories(src/main/cpp/jnihelper/include)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 file(GLOB_RECURSE jni_src "${CMAKE_CURRENT_SOURCE_DIR}/*.c*")
+message("hello world")
+message(${jni_src})
 add_library( # Sets the name of the library.
              jnihelper-lib
 

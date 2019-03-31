@@ -1,5 +1,6 @@
 package com.zkk.demo;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
     static {
         System.loadLibrary("jnihelper-lib");
     }
+
+    boolean threadFlag = true;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,31 @@ public class MainActivity extends AppCompatActivity {
                 new Thread() {
                     @Override
                     public void run() {
-                        stringFromJNI();
+//                        stringFromJNI();
+                        /*while(threadFlag){
+                            createData();
+                        }*/
+
                     }
                 }.start();
+            }
+        });
+        TextView tv_create_data = findViewById(R.id.tv_create_data);
+        tv_create_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        while (threadFlag) {
+                            createData();
+                            SystemClock.sleep(1000);
+                        }
+                    }
+                }.start();
+
+
             }
         });
         Log.i("zhouke_test", "MainActivity jni 开始调用");
@@ -43,7 +69,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
 
+    public native void createData();
+
     public void callBack(String string) {
         Log.i("zhouke", "callBack >> " + string);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        threadFlag = false;
     }
 }

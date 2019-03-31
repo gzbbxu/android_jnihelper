@@ -31,14 +31,14 @@ void create_mult_process(int procesNum, int loopNum) {
         pid_t pid = fork();
         if (pid < 0) {
 //            perror("forkerror");
-            ALOGV("第% dforkerror ",i);
+            ALOGI("第% dforkerror ",i);
             return;
         } else if (pid > 0) {
-            ALOGV("第% 父進程 ",i);
+            ALOGI("第% 父進程 ",i);
             //parent
         } else if (pid == 0) {
             //child
-            ALOGV("第%d个父进程 轮询 ",i);
+            ALOGI("第%d个父进程 轮询 ",i);
             int j = 0;
             for (j = 0; j < loopNum; j++) {
                 testFun(j);
