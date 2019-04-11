@@ -126,6 +126,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_AB
    
 
 4. 
+释放问题：
+1,NewByteArray是创建的一个对象,这个对象好像也应该被释放,但是释放了又如何返回给java端呢;
+也就是说,这个对象是由java端来维护返回其生命周期和资源占用的
+2,ReleaseByteArrayElements(result,buf,0).
+为什么和我原来的想法不一致呢?我认为这个维护应该在java的一端维护,但是java的一端是根本无从维护的,因为我们不能要求java一端区分一个字节数组来自于jni调用,还是直接的java语言本身,所以只能由C/C++一方维护.这个结论显然可以推广到jni的其他类似的接口上
+
 
 
 
